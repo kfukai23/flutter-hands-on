@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 // ProductCardをimportしておく
 import 'package:flutter_hands_on/components/product_card.dart';
+// ProductDetailをimport
+import 'package:flutter_hands_on/pages/product_detail.dart';
 // import宣言を追加する
 import 'package:flutter_hands_on/stores/product_list_store.dart';
 import 'package:provider/provider.dart';
@@ -56,6 +58,12 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
+      // MaterialAppのroutesに、遷移したいウィジェットの情報を格納する
+      // { ルーティング名: (context) => 表示したいウィジェット, }という形式で記述する
+      // {}はMapを表す、ここでは Map<String, Widget Function(BuildContext)>のこと
+      routes: {
+        ProductDetail.routeName: (context) => ProductDetail(),
+      },
     );
   }
 }
