@@ -70,12 +70,8 @@ class MyHomePage extends StatelessWidget {
   }
 
   Widget _productsList(BuildContext context) {
-    // storeの参照を取得
-    // ここではStoreに変更があったらウィジェットに反映したいのでwatchを使う
     final store = context.watch<ProductListStore>();
     final products = store.products;
-    // Storeから取得できた商品の数を見て、表示すべきウィジェットを変える
-    // 具体的には、0件→空っぽのリスト、1件以上→実際の商品リスト
     if (products.isEmpty) {
       return Container(
         child: GridView.builder(
@@ -95,8 +91,28 @@ class MyHomePage extends StatelessWidget {
         ),
       );
     } else {
-      // 商品のウィジェットをまだ作っていないので、仮でTextを表示してみる
-      return Center(child: Text("products"));
+      return Container(
+        // EmptyProductListと同じく、GridView.builderでグリッドビューのウィジェットを表示する
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            childAspectRatio: 0.7,
+          ),
+          // storeから取得できたproductsの数を使う
+          itemCount: products.length,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: EdgeInsets.all(16),
+              // itemBuilderのindexには、表示されるセルの番号が格納されている
+              // Image.networkは画像のURLを渡すと、画像のダウンロードと表示をいい感じにやってくれる
+              // product.sampleImageUrlには商品のサンプル画像のURLが格納されている
+              child: Image.network(products[index].sampleImageUrl),
+            );
+          },
+        ),
+      );
     }
   }
 }
