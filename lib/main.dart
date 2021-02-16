@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+// ProductCardをimportしておく
+import 'package:flutter_hands_on/components/product_card.dart';
 // import宣言を追加する
 import 'package:flutter_hands_on/stores/product_list_store.dart';
 import 'package:provider/provider.dart';
@@ -103,13 +105,8 @@ class MyHomePage extends StatelessWidget {
           // storeから取得できたproductsの数を使う
           itemCount: products.length,
           itemBuilder: (context, index) {
-            return Container(
-              margin: EdgeInsets.all(16),
-              // itemBuilderのindexには、表示されるセルの番号が格納されている
-              // Image.networkは画像のURLを渡すと、画像のダウンロードと表示をいい感じにやってくれる
-              // product.sampleImageUrlには商品のサンプル画像のURLが格納されている
-              child: Image.network(products[index].sampleImageUrl),
-            );
+            // itemBuilderで直接Imageウィジェットを返すのではなく、ProductCardウィジェットを返す
+            return ProductCard(product: products[index]);
           },
         ),
       );
